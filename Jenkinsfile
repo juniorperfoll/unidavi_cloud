@@ -1,36 +1,26 @@
 pipeline {
-  agent {
-        docker {
-            image 'node:20.14.0' // Use a Node.js image
-            args '-u root:root'
-        }
-    }
+  agent any
   environment {
         CI = 'true'
+        DOCKERHUB_CREDENTIALS = credentials('juniorbsn') // Configurar no Jenkins as credenciais
+        DOCKER_IMAGE = 'juniorbsn/unidavi_cloud:latest'
     }
   stages {
     stage("build") {
        steps {
           echo 'Realizando build da aplicação...'
-          sh 'npm install'
-          sh 'npm run build --prod'
+          docker.build("${env.DOCKER_IMAGE}")
           echo 'Build realizado com sucesso!'
        }
     }
-    stage("test") {
-       steps {
-          echo 'Realizando testes da aplicação...'
-          sh 'npm test' 
-          sh 'ng serve'
-          echo 'Testes realizados com sucesso!'
-       }
+    stage('Push') {
+            steps {
+                script {
+                    docker.withRegistry('https://index.docker.io/v1/', env.DOCKERHUB_CREDENTIALS) {
+                        docker.image("${env.DOCKER_IMAGE}").push()
+                    }
+                }
+            }
+        }
     }
-    stage("NG Teste") {
-       steps {
-          echo 'Realizando testes da aplicação...'
-          sh 'npm test' 
-          echo 'Testes realizados com sucesso!'
-       }
-    }
-  }
 }
