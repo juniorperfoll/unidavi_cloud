@@ -5,13 +5,15 @@ pipeline {
             args '-u root:root'
         }
     }
+  environment {
+        CI = 'true'
+    }
   stages {
     stage("build") {
        steps {
           echo 'Realizando build da aplicação...'
           sh 'npm install'
-          sh 'npm install -g @angular/cli'
-          sh 'ng serve'
+          sh 'npm run build --prod'
           echo 'Build realizado com sucesso!'
        }
     }
@@ -19,19 +21,16 @@ pipeline {
        steps {
           echo 'Realizando testes da aplicação...'
           sh 'npm test' 
+          sh 'ng serve'
           echo 'Testes realizados com sucesso!'
        }
     }
-    stage("deploy") {
+    stage("NG Teste") {
        steps {
-          echo 'Realizando deploy da aplicação...'
-           script {
-                      docker.withRegistry('https://hub.docker.com/repositories/juniorbsn', 'juniorbsn') {
-                          docker.image("unidavi_cloud:${env.BUILD_NUMBER}").push()
-                      }
-                  }
-         }
-         echo 'Deploy da aplicação concluída...'
+          echo 'Realizando testes da aplicação...'
+          sh 'npm test' 
+          echo 'Testes realizados com sucesso!'
+       }
     }
   }
 }
