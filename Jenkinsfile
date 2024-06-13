@@ -2,7 +2,7 @@ pipeline {
   agent any
   environment {
         CI = 'true'
-        DOCKERHUB_CREDENTIALS = credentials('juniorbsn') // Configurar no Jenkins as credenciais
+        DOCKERHUB_CREDENTIALS = credentials('docker-hub') // Configurar no Jenkins as credenciais
         DOCKER_IMAGE = 'juniorbsn/unidavi_cloud:latest'
     }
   stages {
