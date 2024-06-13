@@ -17,7 +17,7 @@ COPY . .
 EXPOSE 80
 
 # Define environment variable
-ENV NAME my-angular-app
+ENV NAME unidavi_cloud
 
 # Run app when the container launches
 CMD ["npm", "start"]
