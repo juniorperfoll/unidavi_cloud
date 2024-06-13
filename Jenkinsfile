@@ -26,7 +26,7 @@ pipeline {
        steps {
           echo 'Realizando deploy da aplicação...'
            script {
-                      docker.withRegistry('https://your-docker-registry', 'docker-hub-credentials') {
+                      docker.withRegistry('https://hub.docker.com/repositories/juniorbsn', 'juniorbsn') {
                           docker.image("unidavi_cloud:${env.BUILD_NUMBER}").push()
                       }
                   }
