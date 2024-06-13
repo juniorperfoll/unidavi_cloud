@@ -8,9 +8,11 @@ pipeline {
   stages {
     stage("build") {
        steps {
-          echo 'Realizando build da aplicação...'
-          docker.build("${env.DOCKER_IMAGE}")
-          echo 'Build realizado com sucesso!'
+          script {
+            echo 'Realizando build da aplicação...'
+            docker.build("${env.DOCKER_IMAGE}")
+            echo 'Build realizado com sucesso!'
+          }
        }
     }
     stage('Push') {
