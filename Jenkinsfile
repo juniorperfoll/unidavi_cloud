@@ -2,7 +2,6 @@ pipeline {
   agent {
         docker {
             image 'node:20.14.0' // Use a Node.js image
-            args '-p 4200:4200' // Map the app's port to host
         }
     }
   stages {
