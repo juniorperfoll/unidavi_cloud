@@ -1,29 +1,23 @@
 pipeline {
-  agent any
-  environment {
-        CI = 'true'
-        DOCKERHUB_CREDENTIALS = credentials('docker-hub') // Configurar no Jenkins as credenciais
-        DOCKER_IMAGE = 'juniorbsn/unidavi_cloud:latest'
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building...'
+                sh 'make' // ou qualquer comando de build
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing...'
+                sh 'make test' // ou qualquer comando de teste
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying...'
+                sh 'make deploy' // ou qualquer comando de deploy
+            }
+        }
     }
-  stages {
-    stage("build") {
-       steps {
-          script {
-            echo 'Realizando build da aplicação...'
-            docker.build("${env.DOCKER_IMAGE}")
-            echo 'Build realizado com sucesso!'
-          }
-       }
-    }
-    stage("test") {
-       steps {
-          echo 'Realizando testes da aplicação...'
-       }
-    }
-    stage("deploy") {
-       steps {
-          echo 'Realizando deploy da aplicação...'
-       }
-    }
-  }
 }
