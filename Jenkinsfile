@@ -5,7 +5,6 @@ pipeline {
             steps {
                 echo 'Building...'
                 echo 'Instalando depêndencias...'
-                sh 'npm install'
                 echo 'Dependências instaladas'
             }
         }
