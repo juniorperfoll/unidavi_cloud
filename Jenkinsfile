@@ -11,7 +11,7 @@ pipeline {
        steps {
           echo 'Realizando testes da aplicação...'
        }
-    }
+    }n
     stage("deploy") {
        steps {
           echo 'Realizando deploy da aplicação...'
